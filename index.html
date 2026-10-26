@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DDGPW — Guia completo da linguagem</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef1f6;--panel:#fff;--ink:#14213d;--mute:#56627a;--line:#d3d9e4;--acc:#1d4ed8;--code:#101a30;--ctext:#e6ebf5;--kw:#ffc933;--str:#8fe3a8;--cm:#7f8cab;--num:#ff9d7a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1222;--panel:#141d33;--ink:#e6ebf5;--mute:#9aa7c2;--line:#26324f;--acc:#7aa2ff;--code:#080d1a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0c1222;--panel:#141d33;--ink:#e6ebf5;--mute:#9aa7c2;--line:#26324f;--acc:#7aa2ff;--code:#080d1a;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:calc(64px + env(safe-area-inset-top,0px));scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 "Bricolage Grotesque",system-ui,sans-serif}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto;padding:10px 16px}
+nav a{white-space:nowrap;color:var(--mute);text-decoration:none;padding:6px 12px;border-radius:8px;font-size:15px}
+nav a:hover,nav a:focus-visible{background:var(--panel);color:var(--ink);outline:2px solid var(--acc)}
+header{max-width:860px;margin:0 auto;padding:56px 20px 24px}
+h1{font-size:clamp(44px,9vw,84px);line-height:1;margin:0 0 16px;font-weight:800;letter-spacing:-.03em}
+.lead{font-size:20px;color:var(--mute);max-width:60ch;margin:0 0 20px}
+main{max-width:860px;margin:0 auto;padding:0 20px 80px}
+section{padding-top:40px}
+h2{font-size:30px;margin:0 0 6px;letter-spacing:-.02em}
+h3{font-size:19px;margin:28px 0 6px}
+p{max-width:68ch;margin:8px 0}
+code{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.88em;background:var(--panel);border:1px solid var(--line);padding:1px 6px;border-radius:5px}
+pre{background:var(--code);color:var(--ctext);padding:16px 18px;border-radius:10px;overflow-x:auto;margin:12px 0;line-height:1.55}
+pre code{background:none;border:0;padding:0;font-size:14px;color:inherit}
+.k{color:var(--kw)}.s{color:var(--str)}.c{color:var(--cm)}.n{color:var(--num)}
+.tw{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;background:var(--panel);border:1px solid var(--line);font-size:15px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--bg);font-weight:600}
+td code{white-space:nowrap}
+.note{border-left:4px solid var(--acc);background:var(--panel);padding:10px 16px;margin:14px 0;border-radius:0 8px 8px 0;max-width:68ch}
+footer{text-align:center;color:var(--mute);padding:30px 20px;border-top:1px solid var(--line);font-size:14px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<nav aria-label="Seções">
+<a href="#inicio">Início</a><a href="#tipos">1 Tipos</a><a href="#vetores">2 Vetores</a><a href="#fluxo">3 Fluxo</a><a href="#operadores">4 Operadores</a><a href="#texto">5 Texto</a><a href="#funcvet">6 Funções de vetor</a><a href="#mat">7 Matemática</a><a href="#ref">Referência</a><a href="#exemplo">Exemplo</a>
+</nav>
+<header id="inicio">
+<h1>DDGPW</h1>
+<p class="lead">Uma linguagem de programação em português: declaração com tipo, palavras-chave em português e funções prontas para texto, vetores e matemática. Este guia cobre os 7 módulos.</p>
+<pre><code>texto usuario = "Admin"
+inteiro pontos = 0
+imprimir(usuario, " tem ", pontos, " pontos.")</code></pre>
+</header>
+<main>
+
+<section id="tipos">
+<h2>1. Tipos de variáveis e constantes</h2>
+<p>A DDGPW é fortemente tipada na declaração: você diz o tipo de cada dado ao criá-lo.</p>
+<h3>1.1 Tipos suportados</h3>
+<div class="tw"><table><tr><th>Tipo</th><th>Descrição</th><th>Exemplos</th></tr>
+<tr><td><code>inteiro</code></td><td>Números inteiros, positivos ou negativos</td><td><code>42</code>, <code>-10</code></td></tr>
+<tr><td><code>decimal</code></td><td>Números com fração (ponto flutuante)</td><td><code>3.14</code>, <code>0.5</code></td></tr>
+<tr><td><code>texto</code></td><td>Cadeias de caracteres entre aspas duplas</td><td><code>"Olá"</code>, <code>"123"</code></td></tr>
+<tr><td><code>booleano</code></td><td>Valores lógicos</td><td><code>verdade</code>, <code>falso</code></td></tr>
+<tr><td><code>nulo</code></td><td>Ausência intencional de valor</td><td><code>nulo</code></td></tr></table></div>
+<h3>1.2 Variáveis mutáveis</h3>
+<p>Sintaxe: <code>tipo nome = valor</code>. O valor pode mudar ao longo do programa.</p>
+<pre><code>inteiro contador = 0
+decimal preco = 19.99
+texto usuario = "Admin"
+
+contador = contador + 1
+usuario = "Editor"
+imprimir(usuario, " tem ", contador, " pontos.")</code></pre>
+<h3>1.3 Constantes</h3>
+<p>Com <code>constante</code>, o valor não pode ser alterado. Use para configurações e valores fixos.</p>
+<pre><code>constante decimal PI = 3.1415
+constante texto NOME_SISTEMA = "DDGPW-v3"
+// ERRO: PI = 3.14 (o sistema impede a mudança)</code></pre>
+<h3>1.4 Verificação de tipos em tempo de execução</h3>
+<pre><code>inteiro x = 10
+imprimir(tipo_de(x))     // "inteiro"
+imprimir(eh_inteiro(x))  // verdade
+imprimir(eh_texto(x))    // falso</code></pre>
+</section>
+
+<section id="vetores">
+<h2>2. Vetores: criar e preencher</h2>
+<p>Vetores guardam várias posições de dados. O índice começa em 0. O tipo escrito na declaração é o tipo dos elementos.</p>
+<h3>2.1 Criar</h3>
+<p><b>Criação com tamanho fixo:</b> <code>criar_vetor(tamanho, valor_inicial)</code> reserva o espaço na memória.</p>
+<pre><code>inteiro lista = criar_vetor(5, 0)   // 5 posições, todas com 0</code></pre>
+<p><b>Criação literal:</b> com colchetes, vazio ou já com valores.</p>
+<pre><code>texto nomes = []
+inteiro lista = [10, 20]</code></pre>
+<h3>2.2 Preencher</h3>
+<p><b>Por índice</b>, quando você sabe a posição (use com <code>criar_vetor</code>):</p>
+<pre><code>lista[0] = 100
+lista[1] = 200
+lista[2] = 300</code></pre>
+<p><b>Dinâmico</b>, com <code>empurrar</code>, que coloca o valor na próxima vaga (use com vetor vazio):</p>
+<pre><code>empurrar(nomes, "Carlos")
+empurrar(nomes, "Mariana")
+empurrar(nomes, "José")</code></pre>
+<h3>2.3 Preencher com laço PARA</h3>
+<p>Em vez de escrever posição por posição, use o contador <code>i</code> do laço.</p>
+<pre><code>inteiro numeros = criar_vetor(10, 0)
+para i de 0 ate 9 passo 1 {
+  numeros[i] = i * 10      // 0, 10, 20, 30...
+}
+imprimir(numeros)</code></pre>
+<p>Com entrada do usuário, usando <code>capturar</code>:</p>
+<pre><code>inteiro idades = criar_vetor(3, 0)
+para i de 0 ate 2 passo 1 {
+  idades[i] = capturar("Digite a idade da pessoa " + i + ":")
+}
+imprimir("Lista de idades cadastrada:", idades)</code></pre>
+<p>Com <code>empurrar</code> dentro do laço, partindo de um vetor vazio:</p>
+<pre><code>texto nomes = []
+para i de 1 ate 3 passo 1 {
+  texto n = capturar("Nome do aluno:")
+  empurrar(nomes, n)
+}
+imprimir("Total de alunos:", tamanho_vetor(nomes))</code></pre>
+</section>
+
+<section id="fluxo">
+<h2>3. Controle de fluxo</h2>
+<h3>3.1 SE / SENÃO</h3>
+<pre><code>inteiro idade = 17
+se (idade >= 18) {
+  imprimir("Acesso Liberado")
+} senão {
+  imprimir("Acesso Negado")
+}</code></pre>
+<h3>3.2 PARA (laço contado)</h3>
+<p>Estrutura: <code>para [var] de [início] ate [fim] passo [incremento]</code>. O fim é incluído. Ideal para percorrer vetores.</p>
+<pre><code>para i de 1 ate 5 passo 1 {
+  imprimir("Volta número: ", i)
+}</code></pre>
+<h3>3.3 REPETIR (laço condicional)</h3>
+<p>Executa enquanto a condição for verdadeira.</p>
+<pre><code>inteiro energia = 3
+repetir (energia > 0) {
+  imprimir("Trabalhando... Energia restante: ", energia)
+  energia = energia - 1
+}</code></pre>
+<h3>3.4 ESCOLHA (seleção múltipla)</h3>
+<p>Alternativa mais limpa a vários <code>se</code> seguidos. Cada <code>caso</code> termina com <code>parar</code>, e <code>padrao</code> trata o resto.</p>
+<pre><code>texto sinal = "amarelo"
+escolha (sinal) {
+  caso "verde": imprimir("Siga") parar
+  caso "amarelo": imprimir("Atenção") parar
+  caso "vermelho": imprimir("Pare") parar
+  padrao: imprimir("Sinal estragado")
+}</code></pre>
+</section>
+
+<section id="operadores">
+<h2>4. Operadores</h2>
+<h3>4.1 Matemáticos</h3>
+<div class="tw"><table><tr><th>Símbolo</th><th>Operação</th><th>Exemplo</th></tr>
+<tr><td><code>+</code> <code>-</code></td><td>Soma e subtração</td><td><code>10 + 5</code> → 15</td></tr>
+<tr><td><code>*</code> <code>/</code></td><td>Multiplicação e divisão</td><td><code>20 / 4</code> → 5</td></tr>
+<tr><td><code>%</code></td><td>Resto da divisão</td><td><code>10 % 3</code> → 1</td></tr>
+<tr><td><code>++</code> <code>--</code></td><td>Incremento e decremento</td><td><code>x++</code> (x vira 11)</td></tr></table></div>
+<h3>4.2 Comparação</h3>
+<p>Sempre retornam <code>verdade</code> ou <code>falso</code>.</p>
+<pre><code>imprimir(10 == 10)  // verdade (igual)
+imprimir(5 != 3)    // verdade (diferente)
+imprimir(8 > 12)    // falso   (maior que)
+imprimir(4 <= 4)    // verdade (menor ou igual)</code></pre>
+<h3>4.3 Lógicos</h3>
+<p><code>e</code>: verdade só se os dois lados forem verdade. <code>ou</code>: verdade se pelo menos um for. <code>não</code>: inverte o valor.</p>
+<pre><code>se (idade >= 18 e tem_cnh == verdade) { imprimir("Pode dirigir") }
+
+booleano luz_acesa = falso
+imprimir(não luz_acesa)   // verdade</code></pre>
+<h3>4.4 Bits (baixo nível)</h3>
+<p>Manipulam o número em binário.</p>
+<div class="tw"><table><tr><th>Símbolo</th><th>Nome</th><th>Exemplo</th></tr>
+<tr><td><code>&amp;</code></td><td>E (AND)</td><td><code>5 &amp; 1</code></td></tr>
+<tr><td><code>|</code></td><td>OU (OR)</td><td><code>5 | 1</code></td></tr>
+<tr><td><code>~</code></td><td>NÃO (NOT)</td><td><code>~5</code></td></tr>
+<tr><td><code>&lt;&lt;</code> <code>&gt;&gt;</code></td><td>Deslocamento</td><td><code>2 &lt;&lt; 1</code> → 4</td></tr></table></div>
+</section>
+
+<section id="texto">
+<h2>5. Funções de texto</h2>
+<h3>5.1 Transformação</h3>
+<pre><code>texto frase = "Linguagem DDGPW"
+imprimir(maiusculo(frase))       // "LINGUAGEM DDGPW"
+imprimir(minusculo(frase))       // "linguagem ddgpw"
+imprimir(inverter_texto(frase))  // "WPGDD megaugnil"</code></pre>
+<h3>5.2 Análise e busca</h3>
+<div class="tw"><table><tr><th>Função</th><th>O que faz</th><th>Exemplo</th></tr>
+<tr><td><code>tamanho(t)</code></td><td>Conta caracteres</td><td><code>tamanho("Oi")</code> → 2</td></tr>
+<tr><td><code>contem(t, b)</code></td><td>Verifica se existe</td><td><code>contem("Ola", "a")</code> → verdade</td></tr>
+<tr><td><code>indice_de(t, b)</code></td><td>Posição da letra</td><td><code>indice_de("abc", "b")</code> → 1</td></tr>
+<tr><td><code>comeca_com(t, p)</code></td><td>Começa com...</td><td><code>comeca_com("Abc", "A")</code> → verdade</td></tr></table></div>
+<h3>5.3 Recorte e limpeza</h3>
+<pre><code>texto raw = "  espaços extras  "
+imprimir(aparar(raw))        // "espaços extras"
+
+texto link = "www.google.com"
+imprimir(fatiar(link, 4, 10)) // "google"</code></pre>
+<h3>5.4 Substituição e repetição</h3>
+<pre><code>texto original = "banana"
+imprimir(substituir(original, "a", "o"))  // "bonono"
+imprimir(repetir_texto("A", 3))           // "AAA"</code></pre>
+<h3>5.5 Texto para vetor</h3>
+<pre><code>texto csv = "maçã,uva,pera"
+inteiro lista = dividir_texto(csv, ",")
+imprimir(lista[0])   // "maçã"</code></pre>
+</section>
+
+<section id="funcvet">
+<h2>6. Funções de vetor</h2>
+<h3>6.1 Adição e remoção</h3>
+<pre><code>inteiro lista = [10, 20]
+empurrar(lista, 30)         // [10, 20, 30]
+inserir_inicio(lista, 5)    // [5, 10, 20, 30]
+inteiro ultimo = remover_ultimo(lista)     // remove 30
+inteiro primeiro = remover_primeiro(lista) // remove 5</code></pre>
+<h3>6.2 Organização</h3>
+<div class="tw"><table><tr><th>Função</th><th>O que faz</th><th>Resultado</th></tr>
+<tr><td><code>inverter(v)</code></td><td>Inverte a ordem</td><td>[1,2] → [2,1]</td></tr>
+<tr><td><code>ordenar(v)</code></td><td>Ordem crescente</td><td>[3,1,2] → [1,2,3]</td></tr>
+<tr><td><code>juntar(v, sep)</code></td><td>Vira texto com separador</td><td>"1-2-3"</td></tr></table></div>
+<h3>6.3 Informações e buscas</h3>
+<pre><code>inteiro v = [10, 50, 30]
+imprimir(tamanho_vetor(v))   // 3
+imprimir(indice_de(v, 50))   // 1
+imprimir(contem(v, 100))     // falso</code></pre>
+<p>Note que <code>indice_de</code> e <code>contem</code> funcionam tanto em texto quanto em vetor.</p>
+<h3>6.4 Vetores padronizados</h3>
+<pre><code>texto mapa = criar_vetor(100, "vazio")   // 100 posições com "vazio"</code></pre>
+</section>
+
+<section id="mat">
+<h2>7. Funções matemáticas</h2>
+<h3>7.1 Potência e raiz</h3>
+<pre><code>imprimir(potencia(2, 3))     // 8
+imprimir(raiz(25))           // 5
+imprimir(raiz_cubica(27))    // 3</code></pre>
+<h3>7.2 Arredondamento e absoluto</h3>
+<div class="tw"><table><tr><th>Função</th><th>O que faz</th><th>Exemplo</th></tr>
+<tr><td><code>arredondar(n)</code></td><td>Para o mais próximo</td><td>4.6 → 5</td></tr>
+<tr><td><code>piso(n)</code></td><td>Para baixo</td><td>4.9 → 4</td></tr>
+<tr><td><code>teto(n)</code></td><td>Para cima</td><td>4.1 → 5</td></tr>
+<tr><td><code>absoluto(n)</code></td><td>Torna positivo</td><td>-10 → 10</td></tr></table></div>
+<h3>7.3 Números aleatórios</h3>
+<pre><code>decimal n = aleatorio()            // entre 0 e 1
+inteiro dado = aleatorio_entre(1, 6)
+imprimir("Você tirou: ", dado)</code></pre>
+<h3>7.4 Trigonometria e constantes</h3>
+<pre><code>imprimir(pi())          // 3.14159265...
+imprimir(seno(90))
+imprimir(cosseno(0))
+imprimir(tangente(45))</code></pre>
+<p class="note">Os ângulos de <code>seno</code>, <code>cosseno</code> e <code>tangente</code> são em radianos.</p>
+<h3>7.5 Máximos e mínimos</h3>
+<pre><code>imprimir(maximo(10, 50, 2, 80))   // 80
+imprimir(minimo(10, 50, 2, 80))   // 2</code></pre>
+</section>
+
+<section id="ref">
+<h2>Referência rápida</h2>
+<h3>Palavras-chave</h3>
+<p><code>inteiro</code> <code>decimal</code> <code>texto</code> <code>booleano</code> <code>nulo</code> <code>constante</code> <code>verdade</code> <code>falso</code> <code>se</code> <code>senão</code> <code>para</code> <code>de</code> <code>ate</code> <code>passo</code> <code>repetir</code> <code>escolha</code> <code>caso</code> <code>padrao</code> <code>parar</code> <code>e</code> <code>ou</code> <code>não</code></p>
+<h3>Entrada e saída</h3>
+<p><code>imprimir(...)</code> mostra valores na tela. <code>capturar("pergunta")</code> lê o que o usuário digita.</p>
+<h3>Funções por grupo</h3>
+<div class="tw"><table><tr><th>Grupo</th><th>Funções</th></tr>
+<tr><td>Tipos</td><td><code>tipo_de</code> <code>eh_inteiro</code> <code>eh_texto</code></td></tr>
+<tr><td>Texto</td><td><code>maiusculo</code> <code>minusculo</code> <code>inverter_texto</code> <code>tamanho</code> <code>contem</code> <code>indice_de</code> <code>comeca_com</code> <code>aparar</code> <code>fatiar</code> <code>substituir</code> <code>repetir_texto</code> <code>dividir_texto</code></td></tr>
+<tr><td>Vetor</td><td><code>criar_vetor</code> <code>empurrar</code> <code>inserir_inicio</code> <code>remover_ultimo</code> <code>remover_primeiro</code> <code>inverter</code> <code>ordenar</code> <code>juntar</code> <code>tamanho_vetor</code> <code>indice_de</code> <code>contem</code></td></tr>
+<tr><td>Matemática</td><td><code>potencia</code> <code>raiz</code> <code>raiz_cubica</code> <code>arredondar</code> <code>piso</code> <code>teto</code> <code>absoluto</code> <code>aleatorio</code> <code>aleatorio_entre</code> <code>pi</code> <code>seno</code> <code>cosseno</code> <code>tangente</code> <code>maximo</code> <code>minimo</code></td></tr></table></div>
+</section>
+
+<section id="exemplo">
+<h2>Exemplo completo</h2>
+<p>Um programa que junta constante, vetor, laço, condição e funções dos módulos acima: sorteia cinco dados e avisa se saiu algum 6.</p>
+<pre><code>constante inteiro QUANTIDADE = 5
+inteiro sorteios = []
+
+para i de 1 ate QUANTIDADE passo 1 {
+  empurrar(sorteios, aleatorio_entre(1, 6))
+}
+
+imprimir("Dados: ", juntar(sorteios, "-"))
+
+se (contem(sorteios, 6)) {
+  imprimir("Saiu um 6!")
+} senão {
+  imprimir("Nenhum 6 desta vez.")
+}</code></pre>
+</section>
+</main>
+<footer>Guia da linguagem DDGPW — baseado nos módulos 1 a 7</footer>
+<script>
+(function(){
+var K=/\b(inteiro|decimal|texto|booleano|nulo|constante|verdade|falso|se|senão|para|de|ate|passo|repetir|escolha|caso|padrao|parar|e|ou|não)\b/g;
+document.querySelectorAll('pre code').forEach(function(el){
+  var t=el.textContent.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  var out=t.split('\n').map(function(line){
+    var ci=line.indexOf('//'),cm='';
+    if(ci>-1){cm='<span class="c">'+line.slice(ci)+'</span>';line=line.slice(0,ci);}
+    line=line.replace(/("[^"]*")/g,'\u0001$1\u0002').replace(/(\u0001[^\u0002]*\u0002)|([^\u0001\u0002]+)/g,function(m,s,o){
+      if(s)return '<span class="s">'+s.replace(/[\u0001\u0002]/g,'')+'</span>';
+      return o.replace(/\b(\d+(\.\d+)?)\b/g,'<span class="n">$1</span>').replace(K,'<span class="k">$1</span>');
+    });
+    return line+cm;
+  }).join('\n');
+  el.innerHTML=out;
+});
+})();
+</script>
+</body>
+</html>
